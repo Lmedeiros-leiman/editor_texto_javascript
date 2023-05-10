@@ -16,8 +16,8 @@
   <div class="editor_texto">
      <section class="menu_ferramentas">
          <div class="editor_letra">
-             <button class="negrito"><i class="bi bi-type-bold"></i></button>
-             <button class="italico"><i class="bi bi-type-italic"></i></button>
+             <button class="negrito" onclick="negrito()" ><i class="bi bi-type-bold"></i></button>
+             <button class="italico" onclick="italico()"><i class="bi bi-type-italic"></i></button>
              <button class="sublinhado"><i class="bi bi-type-underline"></i></button>
              <button class="tachado"><i class="bi bi-type-strikethrough"></i></button>
              <button class="subescrito"><i class="bi bi-superscript"></i></button>
@@ -69,6 +69,54 @@
 <script>
 
 let editores = document.querySelectorAll(".editor_texto");
+
+
+
+function negrito() {
+    const palavra = document.getSelection();
+
+    if (palavra.rangeCount > 0) {
+        const selecao = palavra.getRangeAt(0);
+
+        let estaemnegrito = false;
+        let containerpai = selecao.commonAncestorContainer;
+        while (containerpai && containerpai.tagName !== 'BODY') {
+            if (containerpai.tagName === 'STRONG') {
+                estaemnegrito = true;
+                break;
+            }
+            containerpai = containerpai.parentNode;
+        }
+        console.log(selecao);
+        console.log("ta em negrito?: ", estaemnegrito);
+
+        if (estaemnegrito)
+        // removemos o negrito
+        {
+
+
+
+        }
+        // deixamos em negrito
+        else {
+            let elementonegrito = document.createElement("strong");
+            elementonegrito.textContent = palavra.toString();
+            selecao.deleteContents();
+            selecao.insertNode(elementonegrito);
+            palavra.removeAllRanges();
+            palavra.addRange(selecao);
+        }
+
+        // deixa o conteudo em negrito...
+
+        //
+
+
+
+    }
+}
+
+
 
 
 

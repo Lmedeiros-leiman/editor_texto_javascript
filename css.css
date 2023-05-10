@@ -8,7 +8,10 @@
 
 }
 .area_editavel{
-    background-color: darkblue;
+    background-color: floralwhite;
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid black;
 }
 .ferramentas{
     display: flex; flex-direction: row;
