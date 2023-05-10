@@ -1,0 +1,21 @@
+.editor_texto{
+    width: 500px;
+    background-color: grey;
+}
+
+.menu_ferramentas{
+    width: 100%;
+
+}
+.area_editavel{
+    background-color: darkblue;
+}
+.ferramentas{
+    display: flex; flex-direction: row;
+    justify-content: space-between;
+}
+.ferramentas > * {
+    width: 20px; height: 20px;
+    background-color: red;
+    margin-left: 1rem;
+}
