@@ -16,44 +16,61 @@
   <div class="editor_texto">
      <section class="menu_ferramentas">
          <div class="editor_letra">
-             <button class="negrito" onclick="negrito()" ><i class="bi bi-type-bold"></i></button>
-             <button class="italico" onclick="italico()"><i class="bi bi-type-italic"></i></button>
+             <button class="negrito"><i class="bi bi-type-bold"></i></button>
+             <button class="italico"><i class="bi bi-type-italic"></i></button>
              <button class="sublinhado"><i class="bi bi-type-underline"></i></button>
              <button class="tachado"><i class="bi bi-type-strikethrough"></i></button>
              <button class="subescrito"><i class="bi bi-superscript"></i></button>
              <button class="sobescrito"><i class="bi bi-subscript"></i></button>
 
+             <div class="listar">
+                 <button class="listar_ordenado"><i class="bi bi-list-ol"></i></button>
+                 <button class="listar"><i class="bi bi-list-ul"></i></button>
+             </div>
+
+             <div class="comandos">
+                 <button title="desfazer" class="desfazer"><i class="bi bi-arrow-counterclockwise"></i></button>
+                 <button title="refazer" class="refazer"><i class="bi bi-arrow-clockwise"></i></button>
+                 <button title="adicionar link" class="colocar_link"><i class="bi bi-link"></i></button>
+
+             </div>
 
 
-         </div>
-         <div class="listar">
-             <button class="listar_ordenado"><i class="bi bi-list-ol"></i></button>
-             <button class="listar"><i class="bi bi-list-ul"></i></button>
-         </div>
-         <div class="justificar">
-             <button class="esquerda"><i class="bi bi-text-left"></i></button>
-             <button class="centro"><i class="bi bi-text-center"></i></button>
-            <button class="direita"><i class="bi bi-text-right"></i></button>
-         </div>
-         <div>
-             <button class="indentar"><i class="bi bi-text-indent-left"></i></button>
-             <button class="desindentar"><i class="bi bi-text-indent-right"></i></button>
-         </div>
-
-         <div class="comandos">
-             <button class="desfazer"><i class="bi bi-arrow-counterclockwise"></i></button>
-             <button class="refazer"><i class="bi bi-arrow-clockwise"></i></button>
-             <button class="colocar_link"><i class="bi bi-link"></i></button>
 
          </div>
 
+
+         <div class="editor_estilo">
+             <div class="justificar">
+                 <button title="alinhar na esquerda" class="esquerda"><i class="bi bi-text-left"></i></button>
+                 <button title="centralizar" class="centro"><i class="bi bi-text-center"></i></button>
+                <button title="alinhar na direita" class="direita"><i class="bi bi-text-right"></i></button>
+             </div>
+             <div class="indentar">
+                 <button title="indentar" class="indentar"><i class="bi bi-text-indent-left"></i></button>
+                 <button title="remover indentacao" class="desindentar"><i class="bi bi-text-indent-right"></i></button>
+             </div>
+
+             <div class="customizar">
+                 <input class="cor" type="color" value="#000000">
+                 <select class="fonte">
+                     <option value="Times New Roman">Times New Roman</option>
+                     <option value="Georgia">Georgia</option>
+                     <option value="Courier New">Courier New</option>
+                     <option value="Verdana">Verdana</option>
+                     <option value="Lucida Handwriting">Lucida Handwriting</option>
+                 </select>
+
+             </div>
+         </div>
 
      </section>
 
-      <section contenteditable="true" class="area_editavel">
+      <section contenteditable="true" class="area_editavel"></section>
 
-
-
+      <section style="display: flex; justify-content: space-between;">
+          <button class="postar">Postar</button>
+          <div class="contador">0/500</div>
       </section>
   </div>
 
@@ -62,66 +79,78 @@
 
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 
 <script>
 
+
 let editores = document.querySelectorAll(".editor_texto");
 
-
-
-function negrito() {
-    const palavra = document.getSelection();
-
-    if (palavra.rangeCount > 0) {
-        const selecao = palavra.getRangeAt(0);
-
-        let estaemnegrito = false;
-        let containerpai = selecao.commonAncestorContainer;
-        while (containerpai && containerpai.tagName !== 'BODY') {
-            if (containerpai.tagName === 'STRONG') {
-                estaemnegrito = true;
-                break;
-            }
-            containerpai = containerpai.parentNode;
-        }
-        console.log(selecao);
-        console.log("ta em negrito?: ", estaemnegrito);
-
-        if (estaemnegrito)
-        // removemos o negrito
-        {
-
-
-
-        }
-        // deixamos em negrito
-        else {
-            let elementonegrito = document.createElement("strong");
-            elementonegrito.textContent = palavra.toString();
-            selecao.deleteContents();
-            selecao.insertNode(elementonegrito);
-            palavra.removeAllRanges();
-            palavra.addRange(selecao);
-        }
-
-        // deixa o conteudo em negrito...
-
-        //
-
-
-
-    }
+function aplicar_estilo(estilo, valor_adicional = null) {
+    document.execCommand(estilo, false, valor_adicional);
 }
 
+editores.forEach( (editor) => {
+    editor.querySelector('.negrito').onclick = () => aplicar_estilo('bold');
+    editor.querySelector('.italico').onclick = () => aplicar_estilo('italic');
+    editor.querySelector('.sublinhado').onclick = () => aplicar_estilo('underline');
+    editor.querySelector('.tachado').onclick = () => aplicar_estilo('strikethrough');
+    editor.querySelector('.subescrito').onclick = () => aplicar_estilo('superscript');
+    editor.querySelector('.sobescrito').onclick = () => aplicar_estilo('subscript');
+    editor.querySelector('.esquerda').onclick = () => aplicar_estilo('justifyLeft');
+    editor.querySelector('.centro').onclick = () => aplicar_estilo('justifyCenter');
+    editor.querySelector('.direita').onclick = () => aplicar_estilo('justifyRight');
+    editor.querySelector('.indentar').onclick = () => aplicar_estilo('indent');
+    editor.querySelector('.desindentar').onclick = () => aplicar_estilo('outdent');
+    editor.querySelector('.listar_ordenado').onclick = () => aplicar_estilo('insertOrderedList');
+    editor.querySelector('.listar').onclick = () => aplicar_estilo('insertUnorderedList');
+    editor.querySelector('.desfazer').onclick = () => aplicar_estilo('undo');
+    editor.querySelector('.refazer').onclick = () => aplicar_estilo('redo');
+    editor.querySelector('.cor').onchange = () => aplicar_estilo('foreColor',editor.querySelector('.cor').value);
+    editor.querySelector('.fonte').onchange = () => aplicar_estilo('fontName',editor.querySelector('.fonte').value);
+    editor.querySelector('.area_editavel').addEventListener('input', () => {
+        const conteudo = editor.querySelector('.area_editavel');
+        const contador = editor.querySelector('.contador');
+        const quantidade_maxima = 500;
+        let quantidade_palavras = conteudo.textContent.length;
+
+
+
+        if (quantidade_palavras > quantidade_maxima ) {
+            contador.style.color = "red";
+            conteudo.textContent = conteudo.textContent.slice(0, quantidade_maxima);
+            quantidade_palavras = conteudo.textContent.length;
+
+        } else {
+            contador.style.color = "black";
+        }
+        contador.textContent = quantidade_palavras + '/'+ quantidade_maxima;
+
+        const selecao = window.getSelection();
+        const alcance = document.createRange();
+        alcance.selectNodeContents(conteudo);
+        alcance.collapse(false);
+        selecao.removeAllRanges();
+        selecao.addRange(alcance);
+
+
+    });
 
 
 
 
+    editor.querySelector('.colocar_link').onclick = () => {
+        const url = prompt("Digite a URL do link:");
+        aplicar_estilo('createLink', url);
+    };
+    editor.querySelector('.postar').onclick = () => {
+        let botao = editor.querySelector('.postar');
+        let areatexto = editor.querySelector('.area_editavel');
+        console.log(areatexto.innerHTML);
+    };
 
 
+
+});
 
 </script>
 
